@@ -29,12 +29,15 @@ const Products = () => {
         return (
           <div key={product.id}>
             <div className="products">
+              {
+                // TODO Create Product component
+              }
               <div>
                 Name: {product.name} <br />
                 Price: {product.price} <br />
                 Quantity: {product.quantity}
               </div>
-              <div>
+              <div style={{display: "inline-grid"}}>
                 <button>Edit</button> <br />
                 <button>Purchase History</button>
               </div>

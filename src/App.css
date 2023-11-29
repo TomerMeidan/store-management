@@ -22,6 +22,7 @@
 
 .products{
   border: 1px solid;
+  max-width: 350px;
   text-align: left;
   padding: 15px;
   display: flex;
