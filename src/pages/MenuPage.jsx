@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-const Menu = () => {
+const MenuPage = () => {
   return (
-    <div style={{ marginTop: "40px" }}>
+    <div style={{ marginTop: "40px"}}>
       <div className="menu-box">
         <Link to="/products">Products</Link>
       </div>
@@ -16,4 +16,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default MenuPage;
