@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import db from "../utils/firebase";
 import Product from "../components/Product";
-
+import { useDispatch, useSelector } from "react-redux";
 const ProductsPage = () => {
-  const [products, setProducts] = useState();
-
+  const dispatch = useDispatch();
+  // const [products, setProducts] = useState();
+  const products = useSelector(state => state.productsReducer.products)
   const getAll = () => {
     const q = query(collection(db, "products"));
     onSnapshot(q, (querySnapshot) => {
@@ -24,13 +25,24 @@ const ProductsPage = () => {
     getAll();
   }, []);
 
+  const setProducts = (productsData) => {
+    const action = {
+      type: "init-products",
+      payload: {
+        productsData,
+      },
+    };
+    dispatch(action);
+  };
+
   return (
     <div>
       <div style={{ float: "left" }}>
         {
           // TODO Create Search option for a product
         }
-        Search: <input/> <br /><br /> 
+        Search: <input /> <br />
+        <br />
         {products?.map((product) => {
           return (
             <div key={product.id}>
