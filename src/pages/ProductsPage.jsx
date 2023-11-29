@@ -3,6 +3,7 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 import db from "../utils/firebase";
 import Product from "../components/Product";
 import { useDispatch, useSelector } from "react-redux";
+
 const ProductsPage = () => {
   const dispatch = useDispatch();
   // const [products, setProducts] = useState();
