@@ -1,8 +1,23 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+.menu{
+  display: flex;
+  margin: 0 0;
+  justify-content: space-between;
+}
+.menu-box{
+  max-width: 150px;
+  font-size: 30px;
+  border: 1px solid white;
+  border-radius: 20px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .logo {
