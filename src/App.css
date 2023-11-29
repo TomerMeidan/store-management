@@ -20,6 +20,14 @@
   padding-right: 10px;
 }
 
+.products{
+  border: 1px solid;
+  text-align: left;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
