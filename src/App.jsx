@@ -1,9 +1,11 @@
 import "./App.css";
+import "react-widgets/styles.css";
 import { Routes, Route, Link } from "react-router-dom";
 import CustomersPage from "./pages/CustomersPage";
 import MenuPage from "./pages/MenuPage";
 import ProductsPage from "./pages/ProductsPage";
 import PurchasesPage from "./pages/PurchasesPage";
+import AddProduct from "./pages/AddProduct";
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
 
       <Routes>
         <Route path="/" element={<MenuPage />} />
-        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products" element={<ProductsPage />}> 
+        <Route path="add/:costumerID/:costumerName" element={<AddProduct/>}> </Route>
+        </Route>
         <Route path="/customers" element={<CustomersPage />} />
         <Route path="/purchases" element={<PurchasesPage />} />
       </Routes>

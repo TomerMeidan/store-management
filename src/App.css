@@ -5,9 +5,22 @@
   text-align: center;
 }
 
+.products-page-outlet-box{
+  float: left;
+  position: relative;
+  left: 3%;
+  width: 35%;
+}
+
+.products-box{
+  float: left;
+  position: relative;
+}
+
 .total-box{
-  border: 1px solid;
   float: right;
+  position: relative;
+  border: 1px solid;
   padding: 15px;
 }
 
@@ -27,13 +40,18 @@
   margin-bottom: 10px;
 }
 
-.products{
+.products-history{
+  max-height: 100px;
+  overflow-y: auto;
+  border: 1px solid;
+}
+
+
+.product{
   border: 1px solid;
   max-width: 350px;
   text-align: left;
   padding: 15px;
-  display: flex;
-  justify-content: space-between;
 }
 
 .logo {
@@ -57,6 +75,7 @@
     transform: rotate(360deg);
   }
 }
+
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {

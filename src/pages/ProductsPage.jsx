@@ -1,16 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import db from "../utils/firebase";
 import Product from "../components/Product";
 import { useDispatch, useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
+
+// TODO The name of each product is a LINK to the edit product page
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
-  // const [products, setProducts] = useState();
-  const products = useSelector(state => state.productsReducer.products)
-  const getAll = () => {
-    const q = query(collection(db, "products"));
-    onSnapshot(q, (querySnapshot) => {
+  const totalPurchases = useSelector(
+    (state) => state.purchasesReducer.totalPurchases
+  );
+  const products = useSelector((state) => state.productsReducer.products);
+
+  const getAllProducts = () => {
+    const productsQuery = query(collection(db, "products"));
+    onSnapshot(productsQuery, (querySnapshot) => {
       setProducts(
         querySnapshot.docs.map((doc) => {
           return {
@@ -22,8 +28,28 @@ const ProductsPage = () => {
     });
   };
 
+  const getAllPurchases = () => {
+    const productsQuery = query(collection(db, "purchases"));
+    onSnapshot(productsQuery, (querySnapshot) => {
+      let totalPurchases = 0;
+      querySnapshot.docs.map((doc) => {
+        totalPurchases += +doc.data().price;
+      });
+
+      const action = {
+        type: "add-purchase",
+        payload: {
+          totalPurchases: totalPurchases
+        },
+      };
+
+      dispatch(action);
+    });
+  };
+
   useEffect(() => {
-    getAll();
+    getAllProducts();
+    getAllPurchases();
   }, []);
 
   const setProducts = (productsData) => {
@@ -36,31 +62,29 @@ const ProductsPage = () => {
     dispatch(action);
   };
 
+
   return (
     <div>
-      <div style={{ float: "left" }}>
-        {
-          // TODO Create Search option for a product
-        }
-        Search: <input /> <br />
-        <br />
+      <div className="products-box">
         {products?.map((product) => {
           return (
             <div key={product.id}>
-              <div className="products">
+              <div className="product">
                 <Product product={product} />
               </div>
             </div>
           );
         })}
       </div>
+      <div className="products-page-outlet-box">
+        <Outlet />
+      </div>
       <div className="total-box">
         {
-          // TODO Total purchases here
           <>
             <h2>Total Purchases</h2>
-            <h3>Here will be the sum of all purchases</h3>
-            <h3>5550 NIS</h3>
+
+            <h3>{totalPurchases} NIS</h3>
           </>
         }
       </div>
