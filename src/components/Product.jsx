@@ -56,8 +56,6 @@ const Product = ({ product }) => {
     });
   }, [product]);
 
-
-
   return (
     <div>
       <div>
@@ -71,7 +69,15 @@ const Product = ({ product }) => {
       </div>{" "}
       <br />
       <div>
-        <button>Edit</button>{" "}
+        <button
+          onClick={() =>
+            navigate(
+              `edit/${product.id}/${product.name}/${product.price}/${product.quantity}`
+            )
+          }
+        >
+          Edit
+        </button>{" "}
         <button onClick={() => setHistoryVisibility(!historyVisibility)}>
           Purchase History
         </button>
@@ -98,14 +104,13 @@ const Product = ({ product }) => {
                       {`DATE: ${costumer.date} `}
                     </div>{" "}
                     <button
-                      onClick={() => navigate(`add/${costumer.costumerID}/${costumer.name}`)}
+                      onClick={() =>
+                        navigate(`add/${costumer.costumerID}/${costumer.name}`)
+                      }
                       style={{ marginLeft: "auto" }}
                     >
                       Add
                     </button>
-                    {
-                      // TODO Make total purchases an object in redux reducer
-                    }
                   </div>
                 );
               })
