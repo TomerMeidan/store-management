@@ -1,25 +1,29 @@
 import "./App.css";
+import "react-widgets/styles.css";
 import { Routes, Route, Link } from "react-router-dom";
-import Customers from "./pages/Customers";
-import Menu from "./pages/Menu";
-import Products from "./pages/Products";
-import Purchases from "./pages/Purchases";
+import CustomersPage from "./pages/CustomersPage";
+import MenuPage from "./pages/MenuPage";
+import ProductsPage from "./pages/ProductsPage";
+import PurchasesPage from "./pages/PurchasesPage";
+import AddProduct from "./pages/AddProduct";
 
 function App() {
   return (
     <>
       <h1 style={{ borderBottom: "1px solid" }}>Store Management</h1>
-      <div className="menu">
+      <div>
         <div style={{ fontSize: "30px" }}>
           <Link to="/">Main Menu</Link>
         </div>
       </div>
 
       <Routes>
-        <Route path="/" element={<Menu />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/customers" element={<Customers />} />
-        <Route path="/purchases" element={<Purchases />} />
+        <Route path="/" element={<MenuPage />} />
+        <Route path="/products" element={<ProductsPage />}> 
+        <Route path="add/:costumerID/:costumerName" element={<AddProduct/>}> </Route>
+        </Route>
+        <Route path="/customers" element={<CustomersPage />} />
+        <Route path="/purchases" element={<PurchasesPage />} />
       </Routes>
     </>
   );

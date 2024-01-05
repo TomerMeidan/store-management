@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-
-// import todos from './todos'
-// import counter from './counter'
+import productsReducer from './productsReducer'
+import purchasesReducer from './purchasesReducer'
 
 export default combineReducers({
-//   todos,
+   productsReducer,
+   purchasesReducer
 //   counter
 })
