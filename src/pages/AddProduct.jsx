@@ -6,6 +6,8 @@ import { Combobox } from "react-widgets";
 import db from "../utils/firebase";
 import { useSelector } from "react-redux";
 
+// TODO Change the name from addProduct to addPurchase or somthing
+
 const AddProduct = () => {
   const products = useSelector((state) => state.productsReducer.products);
   const { costumerID, costumerName } = useParams();
@@ -19,6 +21,9 @@ const AddProduct = () => {
   }, [exitAddWindow]);
 
   const addPurchase = async () => {
+
+     //TODO Check the quantity of the product if enough
+
     const date = new Date();
 
     const year = date.getFullYear();
@@ -31,7 +36,10 @@ const AddProduct = () => {
       date: `${day}/${month}/${year}`,
       price: selectedProduct.price,
     };
-    await addDoc(collection(db, "purchases"), obj).then(setSaveStatus(true));
+    await addDoc(collection(db, "purchases"), obj).
+    then(setSaveStatus(true));
+
+    //TODO Decrease the quantity of the product
   };
 
   return (
