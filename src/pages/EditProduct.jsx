@@ -10,6 +10,7 @@ import {
   doc,
 } from "firebase/firestore";
 import db from "../utils/firebase";
+
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -18,7 +19,6 @@ import { Link } from "react-router-dom";
 
 const EditProduct = () => {
   const buyingCustomers = useSelector((state) => state.purchasesReducer.buyingCustomers);
-
   const { productID, productName, productPrice, productQuantity } = useParams();
   const navigate = useNavigate();
   const [exitAddWindow, setExitAddWindow] = useState(false);
@@ -105,6 +105,7 @@ const EditProduct = () => {
           <Link > {customer.name}</Link>
         </div>;
       })}
+
     </div>
   );
 };

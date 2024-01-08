@@ -69,6 +69,7 @@ const Product = ({ product }) => {
         })
       );
     });
+
   }, []);
 
   const setBuyingCustomers = (buyingCustomers) => {
@@ -80,6 +81,7 @@ const Product = ({ product }) => {
     };
     dispatch(action);
   };
+
 
   return (
     <div>
@@ -101,6 +103,7 @@ const Product = ({ product }) => {
               `edit/${product.id}/${product.name}/${product.price}/${product.quantity}`
             );
           }}
+
         >
           Edit
         </button>{" "}
@@ -132,6 +135,7 @@ const Product = ({ product }) => {
                     <button
                       onClick={() =>
                         navigate(`add/${customer.costumerID}/${customer.name}`)
+
                       }
                       style={{ marginLeft: "auto" }}
                     >
