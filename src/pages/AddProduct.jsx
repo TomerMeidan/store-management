@@ -10,11 +10,12 @@ import { useSelector } from "react-redux";
 
 const AddProduct = () => {
   const products = useSelector((state) => state.productsReducer.products);
+  const navigate = useNavigate();
+
   const { costumerID, costumerName } = useParams();
   const [selectedProduct, setSelectedProduct] = useState("");
   const [saveStatus, setSaveStatus] = useState(false);
   const [exitAddWindow, setExitAddWindow] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (exitAddWindow) navigate(-1);

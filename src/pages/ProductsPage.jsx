@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import db from "../utils/firebase";
 import Product from "../components/Product";
@@ -32,18 +32,18 @@ const ProductsPage = () => {
     const productsQuery = query(collection(db, "purchases"));
     onSnapshot(productsQuery, (querySnapshot) => {
       let totalPurchases = 0;
-      querySnapshot.docs.map((doc) => {
-        totalPurchases += +doc.data().price;
-      });
 
-      const action = {
-        type: "add-purchase",
-        payload: {
-          totalPurchases: totalPurchases
-        },
-      };
+      setPurchasedProducts(
+        querySnapshot.docs.map((doc) => {
+          totalPurchases += +doc.data().price;
+          return {
+            id: doc.id,
+            ...doc.data(),
+          };
+        })
+      );
 
-      dispatch(action);
+      setTotalPurchases(totalPurchases);
     });
   };
 
@@ -51,6 +51,8 @@ const ProductsPage = () => {
     getAllProducts();
     getAllPurchases();
   }, []);
+
+  // TODO Optimize the methods into a single one
 
   const setProducts = (productsData) => {
     const action = {
@@ -62,16 +64,33 @@ const ProductsPage = () => {
     dispatch(action);
   };
 
+  const setPurchasedProducts = (purchasedProduct) => {
+    const action = {
+      type: "set-purchased-products",
+      payload: {
+        purchasedProduct,
+      },
+    };
+    dispatch(action);
+  };
+
+  const setTotalPurchases = (totalPurchases) => {
+    const action = {
+      type: "add-purchase",
+      payload: {
+        totalPurchases,
+      },
+    };
+    dispatch(action);
+  };
 
   return (
     <div>
       <div className="products-box">
         {products?.map((product) => {
           return (
-            <div key={product.id}>
-              <div className="product">
-                <Product product={product} />
-              </div>
+            <div className="product" key={product.id}>
+              <Product product={product} />
             </div>
           );
         })}

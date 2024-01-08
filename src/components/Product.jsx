@@ -1,16 +1,31 @@
 /* eslint-disable react/prop-types */
 
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
 import db from "../utils/firebase";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import removeDuplicates from "../utils/util";
 
 const Product = ({ product }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [purchasesList, setPurchasesList] = useState([]);
   const [customersList, setCustomersList] = useState([]);
   const [historyVisibility, setHistoryVisibility] = useState(false);
+  const [editClick, setEditClick] = useState(false);
+
+  useEffect(() => {
+    const list = removeDuplicates(customersList, "costumerID")
+    setBuyingCustomers(list);
+  }, [customersList, editClick]);
 
   useEffect(() => {
     setCustomersList([]);
@@ -44,7 +59,7 @@ const Product = ({ product }) => {
     );
 
     // Get customer IDs from the purchases
-    getDocs(purchaseQuery).then((querySnapshot) => {
+    onSnapshot(purchaseQuery, (querySnapshot) => {
       setPurchasesList(
         querySnapshot.docs.map((doc) => {
           return {
@@ -54,7 +69,17 @@ const Product = ({ product }) => {
         })
       );
     });
-  }, [product]);
+  }, []);
+
+  const setBuyingCustomers = (buyingCustomers) => {
+    const action = {
+      type: "set-purchasing-customers",
+      payload: {
+        buyingCustomers,
+      },
+    };
+    dispatch(action);
+  };
 
   return (
     <div>
@@ -70,11 +95,12 @@ const Product = ({ product }) => {
       <br />
       <div>
         <button
-          onClick={() =>
+          onClick={() => {
+            setEditClick(!editClick);
             navigate(
               `edit/${product.id}/${product.name}/${product.price}/${product.quantity}`
-            )
-          }
+            );
+          }}
         >
           Edit
         </button>{" "}
@@ -85,7 +111,7 @@ const Product = ({ product }) => {
         <br />
         <div className="products-history">
           {historyVisibility
-            ? customersList?.map((costumer) => {
+            ? customersList?.map((customer) => {
                 return (
                   <div
                     style={{
@@ -93,19 +119,19 @@ const Product = ({ product }) => {
                       borderBottom: "1px solid",
                       padding: "15px",
                     }}
-                    key={costumer.id}
+                    key={customer.costumerID}
                   >
                     {" "}
                     <div style={{ paddingRight: "50px" }}>
                       {
                         // TODO Send costumer link to edit page
                       }
-                      {`NAME:`} <Link>{`${costumer.name}`}</Link> <br />{" "}
-                      {`DATE: ${costumer.date} `}
+                      {`NAME:`} <Link>{`${customer.name}`}</Link> <br />{" "}
+                      {`DATE: ${customer.date} `}
                     </div>{" "}
                     <button
                       onClick={() =>
-                        navigate(`add/${costumer.costumerID}/${costumer.name}`)
+                        navigate(`add/${customer.costumerID}/${customer.name}`)
                       }
                       style={{ marginLeft: "auto" }}
                     >

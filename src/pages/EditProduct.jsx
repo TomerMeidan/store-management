@@ -10,12 +10,15 @@ import {
   doc,
 } from "firebase/firestore";
 import db from "../utils/firebase";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-
-// TODO Region 2 – A list of all its customers. 
+// TODO Region 2 – A list of all its customers.
 // Each customer name is a link that redirect to “Edit Customer” page
 
 const EditProduct = () => {
+  const buyingCustomers = useSelector((state) => state.purchasesReducer.buyingCustomers);
+
   const { productID, productName, productPrice, productQuantity } = useParams();
   const navigate = useNavigate();
   const [exitAddWindow, setExitAddWindow] = useState(false);
@@ -94,6 +97,14 @@ const EditProduct = () => {
       <br />
       <button onClick={handleUpdateProduct}>Save</button>
       <button onClick={handleDeleteProduct}>Delete</button>
+      <br/><br/>
+      <h3>List of Buying Customers</h3>
+
+      {buyingCustomers.map((customer) => {
+        return <div key={customer.costumerID}>
+          <Link > {customer.name}</Link>
+        </div>;
+      })}
     </div>
   );
 };
