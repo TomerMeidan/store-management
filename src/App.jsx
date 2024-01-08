@@ -5,8 +5,9 @@ import CustomersPage from "./pages/CustomersPage";
 import MenuPage from "./pages/MenuPage";
 import ProductsPage from "./pages/ProductsPage";
 import PurchasesPage from "./pages/PurchasesPage";
-import AddProduct from "./pages/AddProduct";
-import EditProduct from "./pages/EditProduct";
+import AddProduct from "./components/products/AddProduct";
+import EditProduct from "./components/products/EditProduct";
+import EditCustomer from "./components/customers/EditCustomer";
 
 function App() {
   return (
@@ -21,11 +22,14 @@ function App() {
       <Routes>
         <Route path="/" element={<MenuPage />} />
         <Route path="/products" element={<ProductsPage />}> 
-        <Route path="add/:costumerID/:costumerName" element={<AddProduct/>}/>
-        <Route path="edit/:productID/:productName/:productPrice/:productQuantity" element={<EditProduct/>}/>
+          <Route path="add/:costumerID/:costumerName" element={<AddProduct/>}/>
+          <Route path="edit/:productID/:productName/:productPrice/:productQuantity" element={<EditProduct/>}/>
+          <Route path="edit/:customerID" element={<EditCustomer/>}/>
         </Route>
-        <Route path="/customers" element={<CustomersPage />} />
-        <Route path="/purchases" element={<PurchasesPage />} />
+        <Route path="/customers" element={<CustomersPage />}>
+          <Route path="edit/:customerID" element={<EditCustomer/>}/>
+        </Route>
+        <Route path="/purchases" element={<PurchasesPage />}></Route>
       </Routes>
     </>
   );

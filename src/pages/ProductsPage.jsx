@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import db from "../utils/firebase";
-import Product from "../components/Product";
+import Product from "../components/products/Product";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-
-// TODO The name of each product is a LINK to the edit product page
 
 const ProductsPage = () => {
   const dispatch = useDispatch();

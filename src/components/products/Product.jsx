@@ -7,11 +7,11 @@ import {
   where,
   onSnapshot,
 } from "firebase/firestore";
-import db from "../utils/firebase";
+import db from "../../utils/firebase";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import removeDuplicates from "../utils/util";
+import removeDuplicates from "../../utils/util";
 
 const Product = ({ product }) => {
   const navigate = useNavigate();
@@ -129,7 +129,7 @@ const Product = ({ product }) => {
                       {
                         // TODO Send costumer link to edit page
                       }
-                      {`NAME:`} <Link>{`${customer.name}`}</Link> <br />{" "}
+                      {`NAME:`} <Link to={`edit/:${customer.costumerID}`}>{`${customer.name}`}</Link> <br />{" "}
                       {`DATE: ${customer.date} `}
                     </div>{" "}
                     <button
