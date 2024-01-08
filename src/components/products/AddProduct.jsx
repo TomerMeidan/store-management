@@ -4,15 +4,14 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Combobox } from "react-widgets";
 import db from "../../utils/firebase";
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 
 // TODO Change the name from addProduct to addPurchase or somthing
 
 const AddProduct = () => {
   const products = useSelector((state) => state.productsReducer.products);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { costumerID, costumerName } = useParams();
+  const { customerID, costumerName } = useParams();
   const [selectedProduct, setSelectedProduct] = useState("");
   const [exitAddWindow, setExitAddWindow] = useState(false);
   const [actionMessage, setActionMessage] = useState("");
@@ -36,7 +35,7 @@ const AddProduct = () => {
     const day = date.getDate();
 
     const obj = {
-      costumerID,
+      customerID,
       productID: selectedProduct.id,
       date: `${day}/${month}/${year}`,
       price: selectedProduct.price,
@@ -64,7 +63,7 @@ const AddProduct = () => {
       <h2>Add new product</h2>
       Name:{` ${costumerName}`}
       <br />
-      ID:{` ${costumerID}`}
+      ID:{` ${customerID}`}
       <br />
       <div style={{ width: "50%", margin: "20px auto" }}>
         <Combobox

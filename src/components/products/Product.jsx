@@ -23,7 +23,7 @@ const Product = ({ product }) => {
   const [editClick, setEditClick] = useState(false);
 
   useEffect(() => {
-    const list = removeDuplicates(customersList, "costumerID")
+    const list = removeDuplicates(customersList, "customerID")
     setBuyingCustomers(list);
   }, [customersList, editClick]);
 
@@ -31,19 +31,20 @@ const Product = ({ product }) => {
     setCustomersList([]);
     purchasesList?.map((purchase) => {
       // Query purchasing  costumers for the given costumers ID
-      const costumersQuery = query(
+      const customersQuery = query(
         collection(db, "customers"),
-        where("id", "==", purchase.costumerID)
+        where("id", "==", purchase.customerID)
       );
 
-      getDocs(costumersQuery).then((querySnapshot) => {
+      getDocs(customersQuery).then((querySnapshot) => {
         setCustomersList((prevCustomersList) => [
           ...prevCustomersList,
           ...querySnapshot.docs.map((doc) => {
             return {
               name: `${doc.data().firstName} ${doc.data().lastName}`,
               date: purchase.date,
-              costumerID: doc.data().id,
+              customerID: doc.data().id,
+              purchaseID: purchase.id
             };
           }),
         ]);
@@ -122,19 +123,19 @@ const Product = ({ product }) => {
                       borderBottom: "1px solid",
                       padding: "15px",
                     }}
-                    key={customer.costumerID}
+                    key={customer.purchaseID}
                   >
                     {" "}
                     <div style={{ paddingRight: "50px" }}>
                       {
                         // TODO Send costumer link to edit page
                       }
-                      {`NAME:`} <Link to={`edit/:${customer.costumerID}`}>{`${customer.name}`}</Link> <br />{" "}
+                      {`NAME:`} <Link to={`edit/${customer.customerID}`}>{`${customer.name}`}</Link> <br />{" "}
                       {`DATE: ${customer.date} `}
                     </div>{" "}
                     <button
                       onClick={() =>
-                        navigate(`add/${customer.costumerID}/${customer.name}`)
+                        navigate(`add/${customer.customerID}/${customer.name}`)
 
                       }
                       style={{ marginLeft: "auto" }}

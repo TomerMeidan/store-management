@@ -101,7 +101,7 @@ const EditProduct = () => {
       <h3>List of Buying Customers</h3>
 
       {buyingCustomers.map((customer) => {
-        return <div key={customer.costumerID}>
+        return <div key={customer.customerID}>
           <Link > {customer.name}</Link>
         </div>;
       })}
