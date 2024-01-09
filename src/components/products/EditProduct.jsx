@@ -102,7 +102,7 @@ const EditProduct = () => {
 
       {buyingCustomers.map((customer) => {
         return <div key={customer.customerID}>
-          <Link > {customer.name}</Link>
+          <Link to={`/products/edit/${customer.customerID}`}>{`${customer.name}`}</Link>
         </div>;
       })}
 

@@ -18,10 +18,11 @@
 }
 
 .total-box{
-  float: right;
+  float: left;
   position: relative;
   border: 1px solid;
   padding: 15px;
+  margin-left: 70px;
 }
 
 .menu{

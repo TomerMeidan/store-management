@@ -14,7 +14,7 @@ function App() {
     <>
       <h1 style={{ borderBottom: "1px solid" }}>Store Management</h1>
       <div>
-        <div style={{ fontSize: "30px" }}>
+        <div style={{ fontSize: "30px", marginBottom:"15px", textAlign:"left"}}>
           <Link to="/">Main Menu</Link>
         </div>
       </div>
@@ -22,7 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MenuPage />} />
         <Route path="/products" element={<ProductsPage />}> 
-          <Route path="add/:customerID/:costumerName" element={<AddProduct/>}/>
+          <Route path="add/:costumerID/:costumerName" element={<AddProduct/>}/>
           <Route path="edit/:productID/:productName/:productPrice/:productQuantity" element={<EditProduct/>}/>
           <Route path="edit/:customerID" element={<EditCustomer/>}/>
         </Route>
