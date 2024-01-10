@@ -5,6 +5,7 @@ import Product from "../components/products/Product";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLocation } from "react-router-dom";
 
+
 const ProductsPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();

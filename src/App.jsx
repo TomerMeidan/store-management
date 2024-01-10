@@ -16,6 +16,7 @@ function App() {
       <div>
         <div style={{ fontSize: "30px", marginBottom:"15px", textAlign:"left"}}>
           <Link to="/store-management">Main Menu</Link>
+
         </div>
       </div>
 
