@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import db from "../utils/firebase";
-import Product from "../components/Product";
+import Product from "../components/products/Product";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-
-// TODO The name of each product is a LINK to the edit product page
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -31,11 +29,11 @@ const ProductsPage = () => {
   const getAllPurchases = () => {
     const productsQuery = query(collection(db, "purchases"));
     onSnapshot(productsQuery, (querySnapshot) => {
-      let totalPurchases = 0;
+      let tempTotalPurchases = 0;
 
       setPurchasedProducts(
         querySnapshot.docs.map((doc) => {
-          totalPurchases += +doc.data().price;
+          tempTotalPurchases += +doc.data().price;
           return {
             id: doc.id,
             ...doc.data(),
@@ -43,7 +41,7 @@ const ProductsPage = () => {
         })
       );
 
-      setTotalPurchases(totalPurchases);
+      setTotalPurchases(tempTotalPurchases);
     });
   };
 

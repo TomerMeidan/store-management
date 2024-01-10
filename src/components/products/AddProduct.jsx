@@ -1,29 +1,32 @@
 /* eslint-disable react/prop-types */
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Combobox } from "react-widgets";
-import db from "../utils/firebase";
-import { useSelector } from "react-redux";
+import db from "../../utils/firebase";
+import {useSelector } from "react-redux";
 
 // TODO Change the name from addProduct to addPurchase or somthing
 
 const AddProduct = () => {
   const products = useSelector((state) => state.productsReducer.products);
   const navigate = useNavigate();
-
-  const { costumerID, costumerName } = useParams();
+  const { customerID, customerName } = useParams();
   const [selectedProduct, setSelectedProduct] = useState("");
-  const [saveStatus, setSaveStatus] = useState(false);
   const [exitAddWindow, setExitAddWindow] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
 
   useEffect(() => {
-    if (exitAddWindow) navigate(-1);
+    if (exitAddWindow) navigate("..");
   }, [exitAddWindow]);
 
   const addPurchase = async () => {
+    //TODO Check the quantity of the product if enough
 
-     //TODO Check the quantity of the product if enough
+    if (+selectedProduct.quantity <= 0) {
+      setActionMessage("Not enough quantity! can't add the product.");
+      return;
+    }
 
     const date = new Date();
 
@@ -32,15 +35,24 @@ const AddProduct = () => {
     const day = date.getDate();
 
     const obj = {
-      costumerID,
+      customerID,
       productID: selectedProduct.id,
       date: `${day}/${month}/${year}`,
       price: selectedProduct.price,
     };
-    await addDoc(collection(db, "purchases"), obj).
-    then(setSaveStatus(true));
+    await addDoc(collection(db, "purchases"), obj).then(() => {
+      setActionMessage("New product added to customer!");
+      decreaseProductQuantity();
+    });
 
-    //TODO Decrease the quantity of the product
+  };
+
+  const decreaseProductQuantity = async () => {
+    const docRef = doc(db, "products", selectedProduct.id);
+    await updateDoc(docRef, {
+      ...selectedProduct,
+      quantity: +selectedProduct.quantity - 1,
+    }).then(console.log("Product and references updated successfully"));
   };
 
   return (
@@ -48,11 +60,10 @@ const AddProduct = () => {
       <div style={{ float: "right" }}>
         <button onClick={() => setExitAddWindow(true)}>X</button>
       </div>
+      <h2>Add new product</h2>
+      Name:{` ${customerName}`}
       <br />
-      <br />
-      Name:{` ${costumerName}`}
-      <br />
-      ID:{` ${costumerID}`}
+      ID:{` ${customerID}`}
       <br />
       <div style={{ width: "50%", margin: "20px auto" }}>
         <Combobox
@@ -72,10 +83,7 @@ const AddProduct = () => {
       </button>
       <br />
       <br />
-      <p>{saveStatus ? "New Purchase Added!" : null}</p>
-      {
-        // TODO Save the product to the costumer
-      }
+      <p>{actionMessage}</p>
     </div>
   );
 };

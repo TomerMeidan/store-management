@@ -9,7 +9,7 @@ import {
   where,
   doc,
 } from "firebase/firestore";
-import db from "../utils/firebase";
+import db from "../../utils/firebase";
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -28,7 +28,7 @@ const EditProduct = () => {
   const [quantity, setQuantity] = useState(productQuantity);
 
   useEffect(() => {
-    if (exitAddWindow) navigate(-1);
+    if (exitAddWindow) navigate("..");
   }, [exitAddWindow]);
 
   const handleUpdateProduct = async () => {
@@ -68,7 +68,7 @@ const EditProduct = () => {
       <div style={{ float: "right" }}>
         <button onClick={() => setExitAddWindow(true)}>X</button>
       </div>
-      <br /> <br />
+      <h2>Edit product details</h2>
       <b>ID:</b> {productID} <br />
       <br />
       <b>Name:</b>{" "}
@@ -101,8 +101,8 @@ const EditProduct = () => {
       <h3>List of Buying Customers</h3>
 
       {buyingCustomers.map((customer) => {
-        return <div key={customer.costumerID}>
-          <Link > {customer.name}</Link>
+        return <div key={customer.customerID}>
+          <Link to={`/products/edit/${customer.customerID}`}>{`${customer.name}`}</Link>
         </div>;
       })}
 

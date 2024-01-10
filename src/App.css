@@ -18,10 +18,11 @@
 }
 
 .total-box{
-  float: right;
+  float: left;
   position: relative;
   border: 1px solid;
   padding: 15px;
+  margin-left: 70px;
 }
 
 .menu{
@@ -30,6 +31,17 @@
   justify-content: space-between;
 }
 .menu-box{
+  max-width: 150px;
+  font-size: 30px;
+  border: 1px solid white;
+  border-radius: 20px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 10px;
+}
+
+.welcome-box{
   max-width: 150px;
   font-size: 30px;
   border: 1px solid white;
