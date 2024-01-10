@@ -3,10 +3,12 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 import db from "../utils/firebase";
 import Product from "../components/products/Product";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const totalPurchases = useSelector(
     (state) => state.purchasesReducer.totalPurchases
   );
@@ -94,7 +96,7 @@ const ProductsPage = () => {
         })}
       </div>
       <div className="products-page-outlet-box">
-        <Outlet />
+        <Outlet key={location.pathname}/>
       </div>
       <div className="total-box">
         {
