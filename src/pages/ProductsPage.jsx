@@ -29,11 +29,11 @@ const ProductsPage = () => {
   const getAllPurchases = () => {
     const productsQuery = query(collection(db, "purchases"));
     onSnapshot(productsQuery, (querySnapshot) => {
-      let totalPurchases = 0;
+      let tempTotalPurchases = 0;
 
       setPurchasedProducts(
         querySnapshot.docs.map((doc) => {
-          totalPurchases += +doc.data().price;
+          tempTotalPurchases += +doc.data().price;
           return {
             id: doc.id,
             ...doc.data(),
@@ -41,7 +41,7 @@ const ProductsPage = () => {
         })
       );
 
-      setTotalPurchases(totalPurchases);
+      setTotalPurchases(tempTotalPurchases);
     });
   };
 

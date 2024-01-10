@@ -11,7 +11,7 @@ import {useSelector } from "react-redux";
 const AddProduct = () => {
   const products = useSelector((state) => state.productsReducer.products);
   const navigate = useNavigate();
-  const { customerID, costumerName } = useParams();
+  const { customerID, customerName } = useParams();
   const [selectedProduct, setSelectedProduct] = useState("");
   const [exitAddWindow, setExitAddWindow] = useState(false);
   const [actionMessage, setActionMessage] = useState("");
@@ -61,7 +61,7 @@ const AddProduct = () => {
         <button onClick={() => setExitAddWindow(true)}>X</button>
       </div>
       <h2>Add new product</h2>
-      Name:{` ${costumerName}`}
+      Name:{` ${customerName}`}
       <br />
       ID:{` ${customerID}`}
       <br />

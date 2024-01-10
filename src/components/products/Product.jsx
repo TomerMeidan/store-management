@@ -44,7 +44,8 @@ const Product = ({ product }) => {
               name: `${doc.data().firstName} ${doc.data().lastName}`,
               date: purchase.date,
               customerID: doc.data().id,
-              purchaseID: purchase.id
+              purchaseID: purchase.id,
+              productDetails: purchase.productDetails
             };
           }),
         ]);
@@ -66,6 +67,9 @@ const Product = ({ product }) => {
           return {
             id: doc.id,
             ...doc.data(),
+            productDetails: {
+              ...product
+            }
           };
         })
       );

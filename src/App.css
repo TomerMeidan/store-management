@@ -41,6 +41,17 @@
   margin-bottom: 10px;
 }
 
+.welcome-box{
+  max-width: 150px;
+  font-size: 30px;
+  border: 1px solid white;
+  border-radius: 20px;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 10px;
+}
+
 .products-history{
   max-height: 100px;
   overflow-y: auto;

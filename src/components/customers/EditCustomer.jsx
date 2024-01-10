@@ -1,4 +1,13 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -16,6 +25,7 @@ const EditCustomer = () => {
     lastName: "",
     city: "",
   });
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     if (exitAddWindow) navigate("..");
@@ -38,7 +48,46 @@ const EditCustomer = () => {
       }
     };
     getCustomer();
+    getCustomerProducts();
   }, []);
+
+  const getCustomerProducts = () => {
+    // Query the Purchases collection for purchases made by this customer
+    const purchasesQuery = query(
+      collection(db, "purchases"),
+      where("customerID", "==", customerID)
+    );
+
+    getDocs(purchasesQuery).then((querySnapshot) => {
+      let productIDs = [];
+
+      // Extract the product IDs from the purchases
+      querySnapshot.forEach((doc) => {
+        productIDs.push(doc.data().productID);
+      });
+
+      // Ensure productIds has unique values
+      productIDs = Array.from(new Set(productIDs));
+
+      // Now query the Products collection for products with these IDs
+      const productsQuery = query(
+        collection(db, "products"),
+        where("id", "in", productIDs)
+      );
+
+      getDocs(productsQuery).then((querySnapshot) => {
+        let productsData = [];
+
+        // Convert the query results into an array of product objects
+        querySnapshot.forEach((doc) => {
+          productsData.push({ id: doc.id, ...doc.data() });
+        });
+
+        // Update the products state with the new data
+        setProducts(productsData);
+      });
+    });
+  };
 
   const handleUpdateCustomer = async () => {
     const docRef = doc(db, "customers", customerDetails.id);
@@ -116,6 +165,19 @@ const EditCustomer = () => {
       <button onClick={handleUpdateCustomer}>Save</button>
       <button onClick={handleDeleteProduct}>Delete</button>
       <br />
+      <br />
+      <h2>List of bought products</h2>
+      {products?.map((product) => {
+        return (
+          <div key={product.id}>
+            <Link
+              to={`/products/edit/${product.id}/${product.name}/${product.price}/${product.quantity}`}
+            >
+              {product.name}
+            </Link>
+          </div>
+        );
+      })}
       <br />
     </div>
   );
