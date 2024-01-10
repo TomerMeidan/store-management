@@ -4,11 +4,26 @@
   padding: 2rem;
   text-align: center;
 }
+table{
+  border: 1px solid;
+
+}
+th, td{
+  border: 1px solid;
+  padding: 5px;
+}
 
 .products-page-outlet-box{
   float: left;
   position: relative;
   left: 3%;
+  width: 35%;
+}
+
+.customers-page-outlet-box{
+  float: left;
+  position: relative;
+  left: 5%;
   width: 35%;
 }
 
