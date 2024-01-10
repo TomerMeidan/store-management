@@ -20,7 +20,7 @@ function App() {
       </div>
 
       <Routes>
-        <Route path="/" element={<MenuPage />} />
+        <Route path="/store-management" element={<MenuPage />} />
         <Route path="/products" element={<ProductsPage />}> 
           <Route path="add/:customerID/:customerName" element={<AddProduct/>}/>
           <Route path="edit/:productID/:productName/:productPrice/:productQuantity" element={<EditProduct/>}/>
