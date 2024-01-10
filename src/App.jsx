@@ -15,12 +15,13 @@ function App() {
       <h1 style={{ borderBottom: "1px solid" }}>Store Management</h1>
       <div>
         <div style={{ fontSize: "30px", marginBottom:"15px", textAlign:"left"}}>
-          <Link to="/">Main Menu</Link>
+          <Link to="/store-management">Main Menu</Link>
+
         </div>
       </div>
 
       <Routes>
-        <Route path="/" element={<MenuPage />} />
+        <Route path="/store-management" element={<MenuPage />} />
         <Route path="/products" element={<ProductsPage />}> 
           <Route path="add/:customerID/:customerName" element={<AddProduct/>}/>
           <Route path="edit/:productID/:productName/:productPrice/:productQuantity" element={<EditProduct/>}/>
