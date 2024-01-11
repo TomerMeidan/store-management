@@ -21,7 +21,11 @@ const CustomersPage = () => {
         </thead>
         <tbody>
           {customers?.map((customer) => {
-            return <Customer key={customer.id} customer={customer} />;
+            return (
+              <tr key={customer.id}>
+                <Customer  customer={customer} />
+              </tr>
+            )
           })}
         </tbody>
       </table>
