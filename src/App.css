@@ -4,11 +4,26 @@
   padding: 2rem;
   text-align: center;
 }
+table{
+  border: 1px solid;
+
+}
+th, td{
+  border: 1px solid;
+  padding: 5px;
+}
 
 .products-page-outlet-box{
   float: left;
   position: relative;
   left: 3%;
+  width: 35%;
+}
+
+.customers-page-outlet-box{
+  float: left;
+  position: relative;
+  left: 5%;
   width: 35%;
 }
 
@@ -64,6 +79,14 @@
   max-width: 350px;
   text-align: left;
   padding: 15px;
+}
+
+.customer-bought-product-row{
+  display: flex;
+  text-align: left;
+  border: 1px solid; 
+  padding: 5px;
+  justify-content: space-between;
 }
 
 .logo {
