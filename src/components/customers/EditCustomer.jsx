@@ -12,11 +12,11 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import db from "../../utils/firebase";
 
-// TODO Realtime change in the customer information
-
 const EditCustomer = () => {
   const { customerID } = useParams();
   const navigate = useNavigate();
+  const [actionMessage, setActionMessage] = useState("");
+
   const [exitAddWindow, setExitAddWindow] = useState(false);
   const [customerDetails, setCustomerDetails] = useState({
     id: "",
@@ -95,7 +95,10 @@ const EditCustomer = () => {
       firstName: customerDetails.firstName,
       lastName: customerDetails.lastName,
       city: customerDetails.city,
-    }).then(console.log("Customer and references updated successfully"));
+    }).then(() => {
+      console.log("Customer information updated successfully");
+      setActionMessage("Customer information updated successfully");
+    });
   };
 
   const handleDeleteProduct = async () => {
@@ -163,8 +166,7 @@ const EditCustomer = () => {
       <br />
       <button onClick={handleUpdateCustomer}>Save</button>
       <button onClick={handleDeleteProduct}>Delete</button>
-      <br />
-      <br />
+      <p>{actionMessage}</p>
       <h2>List of bought products</h2>
       {products?.map((product) => {
         return (

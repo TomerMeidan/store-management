@@ -89,6 +89,12 @@ th, td{
   justify-content: space-between;
 }
 
+.purchases-combo-box{
+  text-align: left;
+  max-width: 200px;
+  margin-left: 10px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
