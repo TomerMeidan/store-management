@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import db from "../utils/firebase";
 import { useDispatch } from "react-redux";
 
+// TODO Add Logging System
+// TODO Add Login and Auth System for users with roles
+
 const MenuPage = () => {
   const dispatch = useDispatch();
 

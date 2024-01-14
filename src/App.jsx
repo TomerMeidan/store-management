@@ -8,6 +8,7 @@ import PurchasesPage from "./pages/PurchasesPage";
 import AddProduct from "./components/products/AddProduct";
 import EditProduct from "./components/products/EditProduct";
 import EditCustomer from "./components/customers/EditCustomer";
+import PurchaseTable from "./components/purchases/PurchaseTable";
 
 function App() {
   return (
@@ -32,7 +33,9 @@ function App() {
           <Route path="products/edit/:productID/:productName/:productPrice/:productQuantity" element={<EditProduct/>}/>
           <Route path="add/:customerID/:customerName" element={<AddProduct/>}/>
         </Route>
-        <Route path="/purchases" element={<PurchasesPage />}></Route>
+        <Route path="/purchases" element={<PurchasesPage />}>
+        <Route path="purchase-table" element={<PurchaseTable/>}/>
+        </Route>
       </Routes>
     </>
   );

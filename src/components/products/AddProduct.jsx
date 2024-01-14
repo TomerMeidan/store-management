@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Combobox } from "react-widgets";
 import db from "../../utils/firebase";
-import {useSelector } from "react-redux";
-
-// TODO Change the name from addProduct to addPurchase or somthing
+import { useSelector } from "react-redux";
 
 const AddProduct = () => {
   const products = useSelector((state) => state.productsReducer.products);
@@ -21,8 +19,6 @@ const AddProduct = () => {
   }, [exitAddWindow]);
 
   const addPurchase = async () => {
-    //TODO Check the quantity of the product if enough
-
     if (+selectedProduct.quantity <= 0) {
       setActionMessage("Not enough quantity! can't add the product.");
       return;
@@ -41,10 +37,8 @@ const AddProduct = () => {
       price: selectedProduct.price,
     };
     await addDoc(collection(db, "purchases"), obj).then(() => {
-      setActionMessage("New product added to customer!");
       decreaseProductQuantity();
     });
-
   };
 
   const decreaseProductQuantity = async () => {
@@ -52,7 +46,10 @@ const AddProduct = () => {
     await updateDoc(docRef, {
       ...selectedProduct,
       quantity: +selectedProduct.quantity - 1,
-    }).then(console.log("Product and references updated successfully"));
+    }).then(() => {
+      console.log("New product added to customer successfully!");
+      setActionMessage("New product added to customer successfully!");
+    });
   };
 
   return (

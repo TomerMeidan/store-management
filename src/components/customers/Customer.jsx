@@ -26,19 +26,9 @@ const Customer = ({ customer }) => {
       let boughtProducts = [];
 
       // Extract the product IDs from the purchases
-      querySnapshot.forEach((doc) => {
-        const data = { ...doc.data() };
-        boughtProducts.push(data);
-      });
-
-      // Now query the Products collection for products with these IDs
-      const productsQuery = query(
-        collection(db, "products"),
-        where(
-          "id",
-          "in",
-          boughtProducts.map((product) => product.productID)
-        )
+      const productsQuery = getProductsBoughtByCustomer(
+        querySnapshot,
+        boughtProducts
       );
 
       getDocs(productsQuery).then((querySnapshot) => {
@@ -49,20 +39,7 @@ const Customer = ({ customer }) => {
           productsData.push({ id: doc.id, ...doc.data() });
         });
 
-        const p = boughtProducts.map((boughtProduct) => {
-          const product = productsData.find(
-            (product) => product.id === boughtProduct.productID
-          );
-
-          if (product) {
-            return {
-              ...boughtProduct,
-              name: product.name,
-            };
-          } else {
-            return boughtProduct;
-          }
-        });
+        const p = getBoughtProductsNames(boughtProducts, productsData);
 
         // Update the products state with the new data
         setBoughtProducts(p);
@@ -79,7 +56,7 @@ const Customer = ({ customer }) => {
             <div key={index} className="customer-bought-product-row">
               <div>
                 <Link
-                  to={`products/edit/${product.id}/${product.name}/${product.price}/${product.quantity}`}
+                  to={`products/edit/${product.productID}/${product.name}/${product.price}/${product.quantity}`}
                 >
                   {product.name}
                 </Link>
@@ -118,3 +95,38 @@ const Customer = ({ customer }) => {
 };
 
 export default Customer;
+function getBoughtProductsNames(boughtProducts, productsData) {
+  return boughtProducts.map((boughtProduct) => {
+    const product = productsData.find(
+      (product) => product.id === boughtProduct.productID
+    );
+
+    if (product) {
+      return {
+        ...boughtProduct,
+        name: product.name,
+        quantity: product.quantity,
+      };
+    } else {
+      return boughtProduct;
+    }
+  });
+}
+
+function getProductsBoughtByCustomer(querySnapshot, boughtProducts) {
+  querySnapshot.forEach((doc) => {
+    const data = { ...doc.data() };
+    boughtProducts.push(data);
+  });
+
+  // Now query the Products collection for products with these IDs
+  const productsQuery = query(
+    collection(db, "products"),
+    where(
+      "id",
+      "in",
+      boughtProducts.map((product) => product.productID)
+    )
+  );
+  return productsQuery;
+}

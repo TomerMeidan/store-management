@@ -14,14 +14,14 @@ import db from "../../utils/firebase";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-// TODO Region 2 – A list of all its customers.
-// Each customer name is a link that redirect to “Edit Customer” page
-
 const EditProduct = () => {
-  const buyingCustomers = useSelector((state) => state.purchasesReducer.buyingCustomers);
+  const buyingCustomers = useSelector(
+    (state) => state.purchasesReducer.buyingCustomers
+  );
   const { productID, productName, productPrice, productQuantity } = useParams();
   const navigate = useNavigate();
   const [exitAddWindow, setExitAddWindow] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
 
   const [name, setName] = useState(productName);
   const [price, setPrice] = useState(productPrice);
@@ -38,7 +38,10 @@ const EditProduct = () => {
       name,
       price,
       quantity,
-    }).then(console.log("Product and references updated successfully"));
+    }).then(() => {
+      console.log("Product details updated successfully");
+      setActionMessage("Product details updated successfully");
+    });
   };
 
   const handleDeleteProduct = async () => {
@@ -97,15 +100,17 @@ const EditProduct = () => {
       <br />
       <button onClick={handleUpdateProduct}>Save</button>
       <button onClick={handleDeleteProduct}>Delete</button>
-      <br/><br/>
+      <p>{actionMessage}</p>
       <h3>List of Buying Customers</h3>
-
       {buyingCustomers.map((customer) => {
-        return <div key={customer.customerID}>
-          <Link to={`/products/edit/${customer.customerID}`}>{`${customer.name}`}</Link>
-        </div>;
+        return (
+          <div key={customer.customerID}>
+            <Link
+              to={`/products/edit/${customer.customerID}`}
+            >{`${customer.name}`}</Link>
+          </div>
+        );
       })}
-
     </div>
   );
 };

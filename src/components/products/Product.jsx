@@ -91,9 +91,6 @@ const Product = ({ product }) => {
   return (
     <div>
       <div>
-        {
-          // TODO Send product link to edit page
-        }
         Name: <Link>{product.name}</Link> <br />
         Price: {product.price} <br />
         Quantity: {product.quantity}
@@ -131,9 +128,6 @@ const Product = ({ product }) => {
                   >
                     {" "}
                     <div style={{ paddingRight: "50px" }}>
-                      {
-                        // TODO Send costumer link to edit page
-                      }
                       {`NAME:`} <Link to={`edit/${customer.customerID}`}>{`${customer.name}`}</Link> <br />{" "}
                       {`DATE: ${customer.date} `}
                     </div>{" "}
